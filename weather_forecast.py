@@ -1,24 +1,11 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import HTMLResponse
 import uvicorn
-from models import Weather
+from db import get_all_weather
+from db import weather_create
+from db import weather_delete
+from db import weather_name_search
 
-
-
-weather_db = [
-    Weather(
-        city="Москва",
-        temperature=20.5,
-        condition="облачно",
-        humidity=65
-    ),
-    Weather(
-        city="Санкт-Петербург", 
-        temperature=18.0,
-        condition="дождливо",
-        humidity=80
-    )
-] 
 
 
 
@@ -35,24 +22,23 @@ def root():
             "docs": "Перейдите на /docs для документации"}
 
 @app.get("/weather")
-def get_all_weather():
-    return weather_db
+def get_all():
+    return get_all_weather()
 
 @app.post("/weather")
-def weather_create(weather:Weather):
-    weather_db.append(weather)
+def create():
+    return weather_create()
 
 @app.delete("/weather")
-def weather_delete(weather:Weather):
-    weather_db.remove(weather)
+def delete():
+    return weather_delete()
+
 
 @app.get("/search")
-def weather_name_search(city:str):
-    for i in weather_db:
-        if i.city.lower() == city.lower():
-            return i
-        
+def search():
+    return weather_name_search()
 
+        
 
 
 if __name__ == "__main__":
