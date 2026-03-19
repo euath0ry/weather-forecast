@@ -1,15 +1,9 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import HTMLResponse
 import uvicorn
-from pydantic import BaseModel 
+from models import Weather
 
 
-
-class Weather(BaseModel):
-    city: str
-    temperature: float
-    condition:str
-    humidity:int
 
 weather_db = [
     Weather(
