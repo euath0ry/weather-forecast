@@ -5,7 +5,7 @@ from db import get_all_weather
 from db import weather_create
 from db import weather_delete
 from db import weather_name_search
-
+import requests
 
 
 
@@ -35,11 +35,18 @@ def delete():
 
 
 @app.get("/search")
-def search():
-    return weather_name_search()
+def search(name:str):
+    
+    api_link = f"https://api.weatherapi.com/v1/current.json?key=d09e269427a84aaebd4152802262603&q={name}"
+
+    response = requests.get(api_link)
+    data = response.json() 
+    
+    return data
+
 
         
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000) 
+    uvicorn.run(app, host="localhost", port=8000)

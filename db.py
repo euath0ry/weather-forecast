@@ -1,4 +1,12 @@
 from models import Weather
+from fastapi import FastAPI, HTTPException, Query
+import requests
+
+
+
+
+
+
 
 weather_db = [
     Weather(
@@ -28,3 +36,4 @@ def weather_name_search(city:str):
     for i in weather_db:
         if i.city.lower() == city.lower():
             return i
+    
